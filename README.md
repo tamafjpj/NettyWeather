@@ -1,4 +1,3 @@
-"# NettyWeather" 
-<p>Server.java contains server-side of app <p>
-<p>Weather.java contains html-parser(Yandex Weather)<p>
-<p>Client.java contains client-side of app<p>
+<h1>"# NettyWeather" </h1>
+<p><b>Server</b> contains server-side of app(Handler,Init,HTML-parser)</p>
+<p><b>Client</b> contains client-side of app(Handler,Init)</p>
