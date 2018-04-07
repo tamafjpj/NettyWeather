@@ -1,0 +1,2 @@
+Date: 07-04-2018  Time: 06:04:49  Temp: 1  Wind Speed: 5.4  Humidity: 78%  Pressure: 745
+Date: 07-04-2018  Time: 06:06:15  Temp: 1  Wind Speed: 5.4  Humidity: 78%  Pressure: 745

@@ -4,6 +4,7 @@ import org.jsoup.nodes.*;
 import org.jsoup.select.Elements;
 import java.io.IOException;
 
+
 public class Weather {
 private int temperature;
 private float windSpeed;
@@ -13,13 +14,21 @@ private Document doc;
 private String url;
 
 
-public Weather(String url){
-    this.url=url;
+public Weather(String city){
+    this.url="https://yandex.ru/pogoda/"+city.toLowerCase();
     parseDoc();
     this.temperature=setTemperature();
     this.windSpeed=setWindSpeed();
     this.pressure=setPressure();
     this.humidity=setHumidity();
+}
+public Weather(Weather obj){
+    this.url=obj.url;
+    this.doc=obj.doc;
+    this.humidity=obj.humidity;
+    this.pressure=obj.pressure;
+    this.temperature=obj.temperature;
+    this.windSpeed=obj.windSpeed;
 }
 private int parseDoc(){
     try{this.doc=Jsoup.connect(url).get();return 1;}

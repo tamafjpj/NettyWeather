@@ -22,12 +22,11 @@ public class Client {
             b.handler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 public void initChannel(SocketChannel ch) throws Exception {
-                    ch.pipeline().addLast(new StringEncoder() ,new StringDecoder());
+                    ch.pipeline().addLast(new StringEncoder() , new StringDecoder());
                     ch.pipeline().addLast(new SimpleClientHandler());
                 }
             });
             ChannelFuture future = b.connect(host, port).sync();
-            System.out.println("im here");
             future.channel().closeFuture().sync();
         } finally {
             workerGroup.shutdownGracefully();
