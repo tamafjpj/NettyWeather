@@ -7,11 +7,14 @@ import java.sql.Statement;
 
 
 
-public class dbService {
+public enum dbService {
+    INSTANCE;
+
     private final String url = "jdbc:mysql://localhost:3306/weather";
     private  final String user = "root";
     private  final String password = "root";
     public ResultSet rs;
+    public int testVar;
 
     private  Connection con;
     private  Statement stmt;
@@ -24,6 +27,7 @@ public class dbService {
                 sqlEx.printStackTrace();
         }
     }
+
     public void close () {
             //close connection ,stmt and resultset here
             try { con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -77,6 +81,7 @@ public class dbService {
 
     }
     public static void main(String[] args) {
-        dbService db = new dbService();
+       dbService db = dbService.INSTANCE;
+       
     }
 }
