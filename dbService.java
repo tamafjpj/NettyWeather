@@ -38,7 +38,6 @@ public enum dbService {
     public void select(String inQuery) {
         try {
             inQuery=inQuery.toLowerCase();
-            System.out.println(inQuery);
             this.rs = stmt.executeQuery(inQuery);
             if ("select * from weather".equals(inQuery)) {
                 while (rs.next()) {
@@ -70,8 +69,8 @@ public enum dbService {
         }
     }
 
-    public void insert (String city, int windSpeed, int temperature, int pressure, String date, String time) {
-        System.out.println("INSERT INTO weather ( id , city, windSpeed, temperature, pressure, date, time) VALUES (null, '" + city + ", '" + windSpeed + "', '"+temperature + "', '" + pressure +"', '" + date + "', '" + time +"');");
+    public void insert(String city, int windSpeed, int temperature, int pressure, String date, String time) {
+
         try {
             String inQuery = "INSERT INTO weather ( id , city, windSpeed, temperature, pressure, date, time) VALUES (null, '" + city + "', '" + windSpeed + "', '"+temperature + "', '" + pressure +"', '" + date + "', '" + time +"');";
             stmt.executeUpdate(inQuery);
@@ -80,8 +79,22 @@ public enum dbService {
         }
 
     }
+
+    public void delete() {
+        try {
+            String inQuery = "DELETE FROM weather;";
+            stmt.executeUpdate(inQuery);
+            System.out.println("All rows has been deleted from 'weather' database");
+        } catch (SQLException sqlEx) {
+            sqlEx.printStackTrace();
+        }
+
+    }
     public static void main(String[] args) {
        dbService db = dbService.INSTANCE;
-       
+       db.insert("test",1,1,1,"2015-02-12", "01:01:01");
+       db.select("select * from weather");
+       db.delete();
+       db.select("select * from weather");
     }
 }
