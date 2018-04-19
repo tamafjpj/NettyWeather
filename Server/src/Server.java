@@ -20,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Server {
     private int port;
+    dbService dBase = dbService.INSTANCE;
     public Server(int port){this.port=port;}
     public void run()throws Exception{
         EventLoopGroup bossGroup = new NioEventLoopGroup();
@@ -48,24 +49,20 @@ public class Server {
             e.scheduleAtFixedRate(() -> {
                 Weather weather = new Weather("Moscow");
                 Date date=new Date();
-                SimpleDateFormat dt = new SimpleDateFormat ("dd-MM-yyyy");
+                SimpleDateFormat dt = new SimpleDateFormat ("yyyy-MM-dd");
                 SimpleDateFormat tm = new SimpleDateFormat ("kk:mm:ss");
-                System.out.println("Writing to file...");
-                writeWeatherToFile("D:\\Java_projects\\Weather.txt",
-                        "Date: "+ dt.format(date)+"  "
-                        +"Time: "+ tm.format(date)+"  "
-                        +"Temp: " + weather.getTemperature() + "  "
-                        +"Wind Speed: " + weather.getWindSpeed() + "  "
-                        +"Humidity: " + weather.getHumidity() +"%"+"  "
-                        +"Pressure: " + weather.getPressure());
-            }, 0, 3600, TimeUnit.SECONDS);
+                System.out.println("Writing to Data Base...");
+                dBase.insert(weather.getCity(),weather.getWindSpeed(),
+                             weather.getTemperature(),weather.getPressure(),
+                             dt.format(date),tm.format(date));
+            }, 0, 120, TimeUnit.SECONDS);
             f.channel().closeFuture().sync();
         }finally {
             workerGroup.shutdownGracefully();
             bossGroup.shutdownGracefully();
         }
     }
-    public void writeWeatherToFile(String path,String data){
+    public void writeToFile(String path,String data){
         try(FileWriter writer = new FileWriter(path, true))
         {
             writer.write(data);

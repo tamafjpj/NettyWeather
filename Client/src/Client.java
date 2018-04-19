@@ -34,7 +34,7 @@ public class Client {
     }
     public static void main(String[] args){
         Client cl=new Client();
-        try {cl.init();}catch (Exception l){return;}
+        try {cl.init();}catch (Exception l){System.out.println("Can't init Client");}
     }
 }
 

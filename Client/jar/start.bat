@@ -1,1 +1,1 @@
-java -jar Client-1.0-SNAPSHOT-jar-with-dependencies.jar
+java -jar Client-1.1-jar-with-dependencies.jar
