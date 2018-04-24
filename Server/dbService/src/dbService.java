@@ -15,7 +15,6 @@ public enum dbService {
     private  final String user = "root";
     private  final String password = "root";
     public ResultSet rs;
-    public boolean isCalled;
 
     private  Connection con;
     public  Statement stmt;
@@ -24,7 +23,6 @@ public enum dbService {
         try{
             this.con= DriverManager.getConnection(url, user, password);
             this.stmt= con.createStatement();
-            this.isCalled=false;
         } catch (SQLException sqlEx) {
                 System.out.println("Can't connect to Data Base");
                 sqlEx.printStackTrace();
@@ -39,7 +37,7 @@ public enum dbService {
 
     public String select(String how) {
         try {
-            String buf="";
+            String buf;
             if (how.equals("All")) {
                 int id = rs.getInt(1);
                 String city = rs.getString(2);
@@ -49,7 +47,6 @@ public enum dbService {
                 String date = rs.getString(6);
                 String time = rs.getString(7);
                 buf = String.format("id: %d, city: %s, windSpeed: %.1f, temperature: %d, pressure: %d, date: %s, time: %s %n", id, city, windSpeed, temperature, pressure, date, time);
-                isCalled = true;
                 return buf;
                 }
              else if (how.equals("Last")) {

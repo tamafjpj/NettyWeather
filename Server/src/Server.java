@@ -55,7 +55,7 @@ public class Server {
                 dBase.insert(weather.getCity(),weather.getWindSpeed(),
                              weather.getTemperature(),weather.getPressure(),
                              dt.format(date),tm.format(date));
-            }, 0, 120, TimeUnit.SECONDS);
+            }, 0, 3600, TimeUnit.SECONDS);
             f.channel().closeFuture().sync();
         }finally {
             workerGroup.shutdownGracefully();
