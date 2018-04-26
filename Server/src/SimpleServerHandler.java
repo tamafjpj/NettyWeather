@@ -15,7 +15,7 @@ public class SimpleServerHandler extends ChannelInboundHandlerAdapter {
             try {
                 db.rs = db.stmt.executeQuery("select * from weather");
                 while (db.rs.next()) {
-                    ctx.writeAndFlush(db.select("All"));
+                    ctx.writeAndFlush(db.select());
                 }
                 db.rs.close();
                 ctx.close();
@@ -29,7 +29,7 @@ public class SimpleServerHandler extends ChannelInboundHandlerAdapter {
                 try {
                     db.rs=db.stmt.executeQuery("select * from weather order by id desc limit 1;");
                     while (db.rs.next()) {
-                        ctx.writeAndFlush(db.select("Last"));
+                        ctx.writeAndFlush(db.select());
                     }
                     db.rs.close();
                     ctx.close();
@@ -45,9 +45,24 @@ public class SimpleServerHandler extends ChannelInboundHandlerAdapter {
             ctx.writeAndFlush("Deleted!");
             ctx.close();
         }
+        if(o.toString().contains("stat")){
+            String [] args =splitByWords(o.toString());
+            try {
+                db.rs = db.stmt.executeQuery("select * from weather where date between ' " + args[1] + " ' and ' " + args[2] + "' ;");
+                while (db.rs.next()) {
+                    ctx.writeAndFlush(db.select());
+                }
+                db.rs.close();
+                //ctx.close();
+            }
+            catch (SQLException e){ctx.writeAndFlush("Select error");}
+        }
         }
 
-
+    public String[] splitByWords(String str){
+        String[] buf = str.split("\\s");
+        return buf;
+    }
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {

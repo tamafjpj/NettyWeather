@@ -35,10 +35,9 @@ public enum dbService {
             try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
     }
 
-    public String select(String how) {
+    public String select() {
         try {
             String buf;
-            if (how.equals("All")) {
                 int id = rs.getInt(1);
                 String city = rs.getString(2);
                 float windSpeed = rs.getFloat(3);
@@ -48,18 +47,6 @@ public enum dbService {
                 String time = rs.getString(7);
                 buf = String.format("id: %d, city: %s, windSpeed: %.1f, temperature: %d, pressure: %d, date: %s, time: %s %n", id, city, windSpeed, temperature, pressure, date, time);
                 return buf;
-                }
-             else if (how.equals("Last")) {
-                int id = rs.getInt(1);
-                String city = rs.getString(2);
-                float windSpeed = rs.getFloat(3);
-                int temperature = rs.getInt(4);
-                int pressure = rs.getInt(5);
-                String date = rs.getString(6);
-                String time = rs.getString(7);
-                buf = String.format("id: %d, city: %s, windSpeed: %.1f, temperature: %d, pressure: %d, date: %s, time: %s %n", id, city, windSpeed, temperature, pressure, date, time) + "\n";
-                return buf;
-            }
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
         }
