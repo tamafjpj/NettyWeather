@@ -1,1 +1,1 @@
-java -jar Server-1.1-jar-with-dependencies.jar
+java -jar Server-1.2-jar-with-dependencies.jar

@@ -10,21 +10,24 @@ public class SimpleServerHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object o) {
         dbService db = dbService.INSTANCE;
         System.out.print("Request: " + o.toString()+" - ");
-        if (o.toString().equals("1")) {
-            System.out.println("Weather All");
-            try {
-                db.rs = db.stmt.executeQuery("select * from weather");
-                while (db.rs.next()) {
-                    ctx.writeAndFlush(db.select());
-                }
-                db.rs.close();
-                ctx.close();
+        switch (o.toString()){
+            case "1":
+            {
+                System.out.println("Weather All");
+                try {
+                    db.rs = db.stmt.executeQuery("select * from weather");
+                    while (db.rs.next()) {
+                        ctx.writeAndFlush(db.select());
+                    }
+                    db.rs.close();
+                    ctx.close();
 
-            } catch (SQLException sql) {
-                System.out.println("Error");
+                } catch (SQLException sql) {
+                    System.out.println("Error");
+                }
             }
-        }
-        if (o.toString().equals("2")) {
+            case "2":
+            {
                 System.out.println("Weather Last");
                 try {
                     db.rs=db.stmt.executeQuery("select * from weather order by id desc limit 1;");
@@ -39,16 +42,18 @@ public class SimpleServerHandler extends ChannelInboundHandlerAdapter {
                 }
                 ctx.close();
             }
-        if (o.toString().equals("3")) {
-            System.out.println("Weather Delete");
-            db.delete();
-            ctx.writeAndFlush("Deleted!");
-            ctx.close();
+            case "3":
+            {
+                System.out.println("Weather Delete");
+                db.delete();
+                ctx.writeAndFlush("Deleted!");
+                ctx.close();
+            }
         }
         if(o.toString().contains("stat")){
             String [] args =splitByWords(o.toString());
             try {
-                db.rs = db.stmt.executeQuery("select * from weather where date between ' " + args[1] + " ' and ' " + args[2] + "' ;");
+                db.rs = db.stmt.executeQuery(String.format("select * from weather where date between ' %s ' and ' %s' ;", args[1], args[2]));
                 while (db.rs.next()) {
                     ctx.writeAndFlush(db.select());
                 }
@@ -60,8 +65,7 @@ public class SimpleServerHandler extends ChannelInboundHandlerAdapter {
         }
 
     public String[] splitByWords(String str){
-        String[] buf = str.split("\\s");
-        return buf;
+        return str.split("\\s");
     }
 
     @Override

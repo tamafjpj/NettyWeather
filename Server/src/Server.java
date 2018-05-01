@@ -11,8 +11,8 @@ import io.netty.handler.codec.string.StringEncoder;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -20,7 +20,8 @@ import java.util.concurrent.TimeUnit;
 
 public class Server {
     private int port;
-    dbService dBase = dbService.INSTANCE;
+    //dbService dBase = dbService.INSTANCE;
+    public Queue<String>tasks =new PriorityQueue<>(50);
     public Server(int port){this.port=port;}
     public void run()throws Exception{
         EventLoopGroup bossGroup = new NioEventLoopGroup();
@@ -47,14 +48,10 @@ public class Server {
              ChannelFuture f = bs.bind(port).sync();
             ScheduledExecutorService e = Executors.newSingleThreadScheduledExecutor();
             e.scheduleAtFixedRate(() -> {
-                Weather weather = new Weather("Moscow");
-                Date date=new Date();
-                SimpleDateFormat dt = new SimpleDateFormat ("yyyy-MM-dd");
-                SimpleDateFormat tm = new SimpleDateFormat ("kk:mm:ss");
-                System.out.println("Writing to Data Base...");
-                dBase.insert(weather.getCity(),weather.getWindSpeed(),
-                             weather.getTemperature(),weather.getPressure(),
-                             dt.format(date),tm.format(date));
+                TaskGenerator tg = new TaskGenerator(tasks);
+                tg.generateTasks();
+                System.out.println(tasks);
+               for(String i:tasks){new TaskExecutor(tasks);}
             }, 0, 3600, TimeUnit.SECONDS);
             f.channel().closeFuture().sync();
         }finally {

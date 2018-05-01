@@ -5,7 +5,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 
 
-public class Weather {
+public class Weather  {
     private int temperature;
     private float windSpeed;
     private int pressure;
@@ -13,16 +13,19 @@ public class Weather {
     private Document doc;
     private String url;
     private String city;
+    public boolean isParsed=true;
 
 
     public Weather(String city){
         this.url="https://yandex.ru/pogoda/"+city.toLowerCase();
         parseDoc();
-        this.city=city;
-        this.temperature=setTemperature();
-        this.windSpeed=setWindSpeed();
-        this.pressure=setPressure();
-        this.humidity=setHumidity();
+        if(isParsed) {
+            this.city = city;
+            this.temperature = setTemperature();
+            this.windSpeed = setWindSpeed();
+            this.pressure = setPressure();
+            this.humidity = setHumidity();
+        }
     }
     public Weather(Weather obj){
         this.url=obj.url;
@@ -35,7 +38,7 @@ public class Weather {
     }
     private void parseDoc(){
         try{this.doc=Jsoup.connect(url).get();}
-        catch (IOException IOException){System.out.println("City not found");}
+        catch (IOException IOException){System.out.println("City not found");isParsed=false;}
     }
 
     private int setTemperature() {
