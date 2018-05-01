@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
+import java.util.ArrayList;
 
 
 public enum dbService {
@@ -35,9 +35,11 @@ public enum dbService {
             try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
     }
 
-    public String select() {
+    public ArrayList<String> select(String inQuery) {
+        ArrayList<String> formStr =new ArrayList<>(50);
         try {
-            String buf;
+            rs=stmt.executeQuery(inQuery);
+            while (rs.next()) {
                 int id = rs.getInt(1);
                 String city = rs.getString(2);
                 float windSpeed = rs.getFloat(3);
@@ -45,12 +47,12 @@ public enum dbService {
                 int pressure = rs.getInt(5);
                 String date = rs.getString(6);
                 String time = rs.getString(7);
-                buf = String.format("id: %d, city: %s, windSpeed: %.1f, temperature: %d, pressure: %d, date: %s, time: %s %n", id, city, windSpeed, temperature, pressure, date, time);
-                return buf;
+                formStr.add(String.format("id: %d, city: %s, windSpeed: %.1f, temperature: %d, pressure: %d, date: %s, time: %s %n", id, city, windSpeed, temperature, pressure, date, time));
+            }
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
         }
-        return "";
+        return formStr;
     }
 
     public void insert(String city, float windSpeed, int temperature, int pressure, String date, String time) {
@@ -67,6 +69,8 @@ public enum dbService {
     public void delete() {
         try {
             String inQuery = "DELETE FROM weather;";
+            stmt.executeUpdate(inQuery);
+            inQuery="ALTER TABLE weather AUTO_INCREMENT=0;";
             stmt.executeUpdate(inQuery);
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
