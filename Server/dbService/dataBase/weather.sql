@@ -28,10 +28,11 @@ CREATE TABLE `weather` (
   `windSpeed` float DEFAULT NULL,
   `temperature` int(5) DEFAULT NULL,
   `pressure` int(5) DEFAULT NULL,
+  `humidity` int(10) DEFAULT NULL,
   `date` date DEFAULT NULL,
   `time` time DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,6 +41,7 @@ CREATE TABLE `weather` (
 
 LOCK TABLES `weather` WRITE;
 /*!40000 ALTER TABLE `weather` DISABLE KEYS */;
+INSERT INTO `weather` VALUES (59,'test',10,10,10,10,'2018-03-03','09:00:00'),(60,'test2',10,0,0,0,'2018-04-03','03:00:00'),(61,'test2',10,0,0,0,'2018-04-03','03:00:00'),(62,'test2',10,0,0,0,'2018-04-03','03:00:00'),(63,'test2',10,0,0,0,'2018-04-03','03:00:00'),(64,'test2',10,0,0,0,'2018-04-03','03:00:00');
 /*!40000 ALTER TABLE `weather` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-18 19:46:02
+-- Dump completed on 2018-04-26  9:53:21
