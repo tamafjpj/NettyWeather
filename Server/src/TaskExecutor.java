@@ -18,7 +18,7 @@ public class TaskExecutor implements Runnable{
 
     public void run() {
         System.out.println(thread.getName());
-        executeTask();
+        if(!inQueue.isEmpty())executeTask();
     }
     private void executeTask() {
 
@@ -29,13 +29,13 @@ public class TaskExecutor implements Runnable{
             }
                 try {
                     Weather weather = new Weather(city);
-                    if (weather.isParsed) {
+                    if (weather.getDoc()!=null) {
                         Date date = new Date();
                         SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
                         SimpleDateFormat tm = new SimpleDateFormat("kk:mm:ss");
                         System.out.println("Writing to Data Base...");
                         db.insert(weather.getCity(), weather.getWindSpeed(),
-                                weather.getTemperature(), weather.getPressure(),
+                                weather.getTemperature(), weather.getPressure(),weather.getHumidity(),
                                 dt.format(date), tm.format(date));
                     }
                     }catch(NullPointerException e){

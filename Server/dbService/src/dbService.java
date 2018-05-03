@@ -9,11 +9,11 @@ import java.util.ArrayList;
 
 
 public enum dbService {
-    INSTANCE;
+    INSTANCE,TESTINSTANCE("Test database connected");
 
-    private final String url = "jdbc:mysql://localhost:3306/weather";
-    private  final String user = "root";
-    private  final String password = "root";
+    private  String url;
+    private  String user;
+    private  String password;
     public ResultSet rs;
 
     private  Connection con;
@@ -21,12 +21,28 @@ public enum dbService {
 
      dbService(){
         try{
+            this.url="jdbc:mysql://localhost:3306/weather";
+            this.user="root";
+            this.password="root";
             this.con= DriverManager.getConnection(url, user, password);
             this.stmt= con.createStatement();
         } catch (SQLException sqlEx) {
                 System.out.println("Can't connect to Data Base");
                 sqlEx.printStackTrace();
         }
+    }
+    dbService(String MOTD){
+        try{
+            this.url="jdbc:mysql://localhost:3306/test";
+            this.user="root";
+            this.password="root";
+            this.con= DriverManager.getConnection(url, user, password);
+            this.stmt= con.createStatement();
+        } catch (SQLException sqlEx) {
+            System.out.println("Can't connect to Data Base");
+            sqlEx.printStackTrace();
+        }
+        System.out.println(MOTD);
     }
 
     public void close () {
@@ -45,9 +61,10 @@ public enum dbService {
                 float windSpeed = rs.getFloat(3);
                 int temperature = rs.getInt(4);
                 int pressure = rs.getInt(5);
-                String date = rs.getString(6);
-                String time = rs.getString(7);
-                formStr.add(String.format("id: %d, city: %s, windSpeed: %.1f, temperature: %d, pressure: %d, date: %s, time: %s %n", id, city, windSpeed, temperature, pressure, date, time));
+                int humidity = rs.getInt(6);
+                String date = rs.getString(7);
+                String time = rs.getString(8);
+                formStr.add(String.format("id: %d, city: %s, windSpeed: %.1f, temperature: %d, pressure: %d, humidity: %d, date: %s, time: %s %n", id, city, windSpeed, temperature, pressure,humidity, date, time));
             }
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
@@ -55,10 +72,10 @@ public enum dbService {
         return formStr;
     }
 
-    public void insert(String city, float windSpeed, int temperature, int pressure, String date, String time) {
+    public void insert(String city, float windSpeed, int temperature, int pressure,int humidity, String date, String time) {
 
         try {
-            String inQuery = "INSERT INTO weather ( id , city, windSpeed, temperature, pressure, date, time) VALUES (null, '" + city + "', '" + windSpeed + "', '"+temperature + "', '" + pressure +"', '" + date + "', '" + time +"');";
+            String inQuery = "INSERT INTO weather ( id , city, windSpeed, temperature, pressure,humidity, date, time) VALUES (null, '" + city + "', '" + windSpeed + "', '"+temperature + "', '" + pressure +"', '" +humidity + "', '"+ date + "', '" + time +"');";
             stmt.executeUpdate(inQuery);
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();

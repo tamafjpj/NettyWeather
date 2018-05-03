@@ -10,14 +10,48 @@ public class SimpleServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object o) {
         dbService db = dbService.INSTANCE;
-        System.out.print("Request: " + o.toString()+" - ");
+        String[] cities=new String[]{"Moscow","Kaliningrad","Pyatigorsk","Saint-petersburg","Chelyabinsk",
+                "Nizhny-novgorod","Novosibirsk","Vladivostok","Krasnoyarsk","Kazan",
+                "Ufa","Rostov-na-donu","Samara","Yekaterinburg","Omsk"};
+        System.out.println("Request: " + o.toString());
         String inQuery="";
-        if(o.toString().compareTo("1")==0)inQuery="select * from weather";
-        else if(o.toString().compareTo("2")==0)inQuery="select * from weather order by id desc limit 1;";
-        else if(o.toString().compareTo("3")==0){db.delete();ctx.writeAndFlush("Deleted!");}
-        else if(o.toString().contains("stat")){
+        if(o.toString().toLowerCase().contains("weather")){
             String [] args =splitByWords(o.toString());
-            inQuery=String.format("select * from weather where date between ' %s ' and ' %s' ;", args[1], args[2]);
+            switch (args[1]){
+                case "all":inQuery="select * from weather";
+                break;
+                case "stat":
+                {
+                    boolean isInList=false;
+                    for(String i:cities){
+                        if(args[2].toLowerCase().equals(i.toLowerCase())){
+                            isInList=true;
+                            try {
+                                String min="",max="",avg="";
+                                db.rs=db.stmt.executeQuery(String.format("select min(temperature) as temperature from weather where city = '%s' and date between '%s' and '%s';",args[2],args[3],args[4]));
+                                if(db.rs.next())min=db.rs.getString(1);
+                                db.rs=db.stmt.executeQuery(String.format("select max(temperature) as temperature from weather where city = '%s' and date between '%s' and '%s';",args[2],args[3],args[4]));
+                                if(db.rs.next())max=db.rs.getString(1);
+                                db.rs=db.stmt.executeQuery(String.format("select avg(temperature) as temperature from weather where city = '%s' and date between '%s' and '%s';",args[2],args[3],args[4]));
+                                if(db.rs.next())avg=db.rs.getString(1);
+                                ctx.writeAndFlush("MIN: "+min+ " MAX: "+max+" AVG: "+avg);
+                                inQuery=String.format("select * from weather where city = '%s' and date between '%s' and '%s';", args[2], args[3],args[4]);
+                            }catch (SQLException e){e.printStackTrace();//ctx.close();
+                                 }
+                        }
+                    }
+                    if(!isInList){ctx.writeAndFlush("No such city in list");ctx.close();}
+                }
+                break;
+                case "delete":
+                {
+                    db.delete();
+                    ctx.writeAndFlush("DELETED ALL DATA");
+                    inQuery="select * from weather";
+                    ctx.close();
+                }
+                default:{ctx.writeAndFlush("No such command.");ctx.close();}
+            }
         }
         try {
                 ArrayList<String>rs=db.select(inQuery);
@@ -30,6 +64,7 @@ public class SimpleServerHandler extends ChannelInboundHandlerAdapter {
                     System.out.println("Error");
                 }
         }
+
 
     public String[] splitByWords(String str){
         return str.split("\\s");

@@ -50,8 +50,7 @@ public class Server {
              //Создание тасков и их запись в БД с заданным периодом
             ScheduledExecutorService e = Executors.newSingleThreadScheduledExecutor();
             e.scheduleAtFixedRate(() -> {
-                TaskGenerator tg = new TaskGenerator(tasks);
-                tg.generateTasks();
+                new TaskGenerator(tasks);
                 System.out.println(tasks);
                for(int i=0;i<tasks.size();i++){new TaskExecutor(tasks);}
             }, 0, 3600, TimeUnit.SECONDS);
