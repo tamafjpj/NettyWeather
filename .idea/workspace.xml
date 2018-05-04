@@ -1,31 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="28848ebc-1cc0-4b7c-9ffd-375379723b0e" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/jar/Client-1.0-SNAPSHOT-jar-with-dependencies.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/jar/Client-1.1-jar-with-dependencies.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/jar/Client-1.2-jar-with-dependencies.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/jar/start.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/src/Client.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/src/SimpleClientHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/dbService/dataBase/weather.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/dbService/src/dbService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/jar/Server-1.0-SNAPSHOT-jar-with-dependencies.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/jar/Server-1.1-jar-with-dependencies.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/jar/Server-1.2-jar-with-dependencies.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/jar/Server-1.3-jar-with-dependencies.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/jar/start.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Server.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/SimpleServerHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/TaskExecutor.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/TaskGenerator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Weather.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/test/TaskGeneratorTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/test/WeatherTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/test/dbServiceTest.java" beforeDir="false" />
-    </list>
+    <list default="true" id="28848ebc-1cc0-4b7c-9ffd-375379723b0e" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/Client/target/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/Server/target/" />
@@ -182,12 +158,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1525442070703</updated>
-      <workItem from="1525442072729" duration="268000" />
+      <workItem from="1525442072729" duration="515000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="268000" />
+    <option name="totallyTimeSpent" value="515000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
@@ -200,8 +176,8 @@
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" visible="true" weight="0.27552083" />
       <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3295099" />
-      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3295099" />
+      <window_info anchor="bottom" id="Version Control" visible="true" weight="0.3295099" />
       <window_info anchor="bottom" id="Terminal" />
       <window_info id="Capture Tool" />
       <window_info id="Designer" />
