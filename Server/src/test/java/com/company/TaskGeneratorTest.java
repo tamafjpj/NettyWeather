@@ -11,8 +11,8 @@ public class TaskGeneratorTest {
 
     @Test
     public void generateTasks() {
-        Queue<String> inQueue =new PriorityQueue<>(20);
-        TaskGenerator tg =new TaskGenerator(inQueue);
-        assertEquals(tg.getCities().length,inQueue.size());
+        Queue<String> inQueue = new PriorityQueue<>(20);
+        TaskGenerator tg = new TaskGenerator(inQueue);
+        assertEquals(tg.getCities().length, inQueue.size());
     }
 }

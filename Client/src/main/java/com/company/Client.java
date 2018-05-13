@@ -10,7 +10,7 @@ import io.netty.handler.codec.string.StringEncoder;
 
 
 public class Client {
-    public void init()throws Exception {
+    public void init() throws Exception {
         String host = "localhost";
         int port = 4747;
         EventLoopGroup workerGroup = new NioEventLoopGroup();
@@ -22,7 +22,7 @@ public class Client {
             b.handler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 public void initChannel(SocketChannel ch) throws Exception {
-                    ch.pipeline().addLast(new StringEncoder() , new StringDecoder());
+                    ch.pipeline().addLast(new StringEncoder(), new StringDecoder());
                     ch.pipeline().addLast(new SimpleClientHandler());
                 }
             });
@@ -32,9 +32,14 @@ public class Client {
             workerGroup.shutdownGracefully();
         }
     }
-    public static void main(String[] args){
-        Client cl=new Client();
-        try {cl.init();}catch (Exception l){System.out.println("Can't init Client");}
+
+    public static void main(String[] args) {
+        Client cl = new Client();
+        try {
+            cl.init();
+        } catch (Exception l) {
+            System.out.println("Can't init Client");
+        }
     }
 }
 

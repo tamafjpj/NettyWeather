@@ -10,19 +10,22 @@ import static org.junit.Assert.*;
 
 public class dbServiceTest {
     dbService db = dbService.TESTINSTANCE;
+
     @Test
     @DisplayName("1.Testing select method from dbService")
     public void select() {
-        ArrayList<String>al;
+        ArrayList<String> al;
         try {
             db.stmt.executeUpdate("DELETE FROM weather");
             db.stmt.executeUpdate("INSERT INTO weather SET id = null , city = 'Moscow', windSpeed = 2, pressure = 760, humidity = 15, date= '2018-05-01', time= '00:02:20';");
-            al=db.select("select * from weather");
-            assertEquals(1,al.size());
+            al = db.select("select * from weather");
+            assertEquals(1, al.size());
             db.stmt.executeUpdate("DELETE FROM weather");
-            al=db.select("select * from weather");
-            assertEquals(0,al.size());
-        }catch (SQLException e){e.printStackTrace();}
+            al = db.select("select * from weather");
+            assertEquals(0, al.size());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -45,6 +48,8 @@ public class dbServiceTest {
         try {
             db.rs = db.stmt.executeQuery("select * from weather");
             assertFalse(db.rs.next());
-        }catch (SQLException e){e.printStackTrace();}
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
